@@ -1,0 +1,56 @@
+#include<iostream>
+#include<cstdlib>
+#include<cmath>
+#include<vector>
+using namespace std;
+
+int compscore(int M,int N){
+    if(M==N){
+        return 10;
+    }
+    else if(N-1<=M&&M<=N+1){
+        return 5;
+    }
+    else if(N-3<=M&&M<=N+3){
+        return 2;
+    }
+    else{
+        return 0;
+    }
+}
+
+
+
+int main(){
+    vector<int>scores;
+    int seed;
+    double mean=0,sD=0;
+    for(int round=0;round<10;round++){
+        if(!(cin>>seed))break;
+        if(seed==-1)break;
+        srand(seed);
+        int ran=rand()%21;
+
+        for(int i=0;i<10;i++){
+            int x;
+            cin>>x;
+            if(x>=0&&x<=20){
+                scores.push_back(compscore(x,ran));
+            }
+            else i--;
+        }
+    }
+        double sum=0,var=0;
+        for(int score:scores){
+            sum+=score;
+        }
+        mean=sum/scores.size();
+        for(int score:scores){
+            var+=pow((score-mean),2);
+        }
+        sD=sqrt(var/scores.size());
+
+        cout<<sD<<endl;
+
+        return 0;
+}
